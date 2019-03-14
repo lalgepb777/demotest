@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { timeout } from '../../node_modules/@types/q';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,31 @@ export class AppComponent  {
   list : any[]=[];
   id : number=0;
   Service: string='queue';
-  constructor() {}
+  averageTime=15;
+  liveDate:string='';
+
+  constructor() {
+    this.startTime();
+  }
+
+  startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = this.checkTime(m);
+    s = this.checkTime(s);
+    this.liveDate = (h<12? 13 : h-12) + ":" + m + ":" + s + " " + (h<12?"AM" :"PM");
+    setTimeout(()=>{    //<<<---    using ()=> syntax
+      this.startTime();
+ }, 500);
+    
+  }
+  checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+  }
+
   ngOnInit () {
     this.GetBarbers();
   }
@@ -55,7 +80,7 @@ export class AppComponent  {
   }
 
 onsubmit(){
-  if(this.Service=='waiting' && this.nrSelect=='0'){
+  if((this.Service=='waiting' || this.Service=='chair') && this.nrSelect=='0'){
    alert('Please select barber');
    }
    else{
@@ -78,6 +103,7 @@ onsubmit(){
     "barberId" :this.bb,
     "bname":this.GetBarberName(this.bb),
     "service" :this.Service,
+    "arrival":new Date()
   });
   }
   this.list=this.customers;

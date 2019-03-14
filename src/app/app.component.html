@@ -22,7 +22,7 @@
        <div class = "form-group mt-5">
           <select [(ngModel)]='Service' id='Service' name='Service' class='form-control' >
              <option value='queue'>In Queue</option>
-             <option value='waiting'>Waiting</option>
+             <option value='waiting'>Wait For Barber</option>
              <option value='chair'>In Chair</option>
              <option value='serviced'>Serviced</option>
            </select>
@@ -38,19 +38,25 @@
 </div>
 <div class="col-6">
   <div class="row">
+    <div class="col-9">
       <label>Choose Barber : </label>
-      <select class='form-control col-4 ml-2' (change)='choosed($event.target.value)'>
-         <option value={{lst.id}} *ngFor="let lst of barbers">{{lst.name}}</option>
-       </select>
+        <select class='form-control col-4 ml-2' (change)='choosed($event.target.value)'>
+           <option value={{lst.id}} *ngFor="let lst of barbers">{{lst.name}}</option>
+         </select>
+    </div>
+    <div class="col-3">
+        <h3>{{liveDate}}</h3>
+      </div>
   </div>
 <div class="row mt-5">
     <table class="table table-bordered">
         <thead>
-        <td>id</td>
-        <td>name</td>
-        <td>phone</td>
-        <td>barber</td>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Phone</td>
+        <td>Barber</td>
         <td>Service</td>
+        <td>Arrival Time</td>
         <td>Action</td>
         </thead>
         <tbody>
@@ -60,6 +66,7 @@
         <td>{{lst.phone}}</td>
         <td>{{lst.bname}}</td>
         <td>{{lst.service}}</td>
+        <td>{{lst.arrival | date :'short'}}</td>
         <td>
         <input type="button" class="btn btn-primary" value="Select" (click)="onSelect(lst)" [disabled]='lst.service=="serviced"?true:false'>
         </td>
