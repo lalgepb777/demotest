@@ -1,0 +1,73 @@
+<div class="row mt-5 ml-2 mr-2">
+<div class="col-4">
+  <div class = "container">
+    <h1>Receiption Form</h1>
+    <hr>
+    <form>
+       <div class = "form-group">
+        <input type = "text" class = "form-control" id = "name" placeholder="Enter name"
+             [(ngModel)] = "name" name = "name">
+            <div class="text-danger float-left" *ngIf="name==''">Please enter name</div>
+       </div>
+       <div class = "form-group mt-5">
+          <input type = "text" class = "form-control" id = "phone" required placeholder="Enter phone"
+             [(ngModel)] = "phone" name = "phone">
+             <div class="text-danger float-left" *ngIf="phone==''">Please enter name</div>
+       </div>
+       <div class = "form-group mt-5">
+          <select [(ngModel)]='nrSelect' id='nrSelect' name='nrSelect' class='form-control' (change)='changed($event.target.value)'>
+             <option value={{lst.id}} *ngFor="let lst of barbers">{{lst.name}}</option>
+           </select>
+       </div>
+       <div class = "form-group mt-5">
+          <select [(ngModel)]='Service' id='Service' name='Service' class='form-control' >
+             <option value='queue'>In Queue</option>
+             <option value='waiting'>Waiting</option>
+             <option value='chair'>In Chair</option>
+             <option value='serviced'>Serviced</option>
+           </select>
+       </div>
+       <hr>
+       <div class = "form-group">
+          <input type="button" class="btn btn-success" value="Submit" (click)="onsubmit()" [disabled]='name=="" || phone=="" ?true:false'>
+          <input type="button" class="btn btn-warning ml-2" value="Clear" (click)="Clear()">
+       </div>
+    </form>
+ </div>
+
+</div>
+<div class="col-6">
+  <div class="row">
+      <label>Choose Barber : </label>
+      <select class='form-control col-4 ml-2' (change)='choosed($event.target.value)'>
+         <option value={{lst.id}} *ngFor="let lst of barbers">{{lst.name}}</option>
+       </select>
+  </div>
+<div class="row mt-5">
+    <table class="table table-bordered">
+        <thead>
+        <td>id</td>
+        <td>name</td>
+        <td>phone</td>
+        <td>barber</td>
+        <td>Service</td>
+        <td>Action</td>
+        </thead>
+        <tbody>
+        <tr *ngFor="let lst of list">
+        <td>{{lst.id}}</td>
+        <td>{{lst.customername}}</td>
+        <td>{{lst.phone}}</td>
+        <td>{{lst.bname}}</td>
+        <td>{{lst.service}}</td>
+        <td>
+        <input type="button" class="btn btn-primary" value="Select" (click)="onSelect(lst)" [disabled]='lst.service=="serviced"?true:false'>
+        </td>
+        </tr>
+        <tbody>
+        </table>
+        
+</div>  
+</div>
+</div>
+ 
